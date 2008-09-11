@@ -1,0 +1,14 @@
+%h1>New <%= singular_name %>
+
+- form_for(@<%= singular_name %>) do |f|
+  = f.error_messages
+
+<% for attribute in attributes -%>
+  %p
+    = f.label :<%= attribute.name %>
+    = f.<%= attribute.field_type %> :<%= attribute.name %>
+<% end -%>
+  %p
+    = f.submit "Create"
+
+%p= link_to 'Back', <%= plural_name %>_path

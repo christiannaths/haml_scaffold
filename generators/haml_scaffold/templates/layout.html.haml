@@ -1,0 +1,10 @@
+!!!
+%html{ html_attrs }
+  %head
+    %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}/
+    %title <%= controller_class_name %> : <%= controller.action_name %>
+    = stylesheet_link_tag 'scaffold'
+    
+    %body
+      %p{ :style => "color:green;"}= flash[:notice]
+      = yield

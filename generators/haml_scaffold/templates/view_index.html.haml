@@ -1,0 +1,20 @@
+%h1 Listing <%= plural_name %>
+
+#<%= plural_name %>
+  - for <%= singular_name %> in @<%= plural_name %> 
+    %ul
+<% for attribute in attributes -%>
+      %li
+        = <%= singular_name %>.<%= attribute.name %>
+<% end -%>
+      %li
+        (
+        = link_to 'Show', <%= singular_name %>
+        |
+        = link_to 'Edit', edit_<%= singular_name %>_path(<%= singular_name %>)
+        |
+        = link_to 'Destroy', <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
+        )
+      %li{ :style => "list-style-type:none;"} &nbsp;
+
+%p= link_to 'New <%= singular_name %>', new_<%= singular_name %>_path
