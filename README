@@ -1,13 +1,18 @@
 HamlScaffold
 ============
 
-Introduction goes here.
+This plugin creates scaffolds with .html.haml views rather than the
+traditional .haml.erb views. Otherwise, all other aspects of the
+core rails scaffolding is intact.
 
+Install
+=======
+install this as a plugin to your rails app
 
 Example
 =======
 
-Example goes here.
+./script/generate haml_scaffold Post title:string body:text
 
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Released under the MIT license
