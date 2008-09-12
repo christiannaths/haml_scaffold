@@ -5,9 +5,15 @@ This plugin creates scaffolds with .html.haml views rather than the
 traditional .haml.erb views. Otherwise, all other aspects of the
 core rails scaffolding is intact.
 
+Requires
+=======
+Rails 2.1.0+
+Haml
+
 Install
 =======
-install this as a plugin to your rails app
+install this as a plugin to your rails app with
+./script/plugin install git://github.com/cnaths/haml_scaffold.git
 
 Example
 =======
