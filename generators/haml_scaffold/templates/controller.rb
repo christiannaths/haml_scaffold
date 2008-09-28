@@ -48,6 +48,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.html { redirect_to(@<%= file_name %>) }
         format.xml  { render :xml => @<%= file_name %>, :status => :created, :location => @<%= file_name %> }
       else
+        flash.now[:error] = 'Something went wrong.'
         format.html { render :action => "new" }
         format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
       end
@@ -65,6 +66,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.html { redirect_to(@<%= file_name %>) }
         format.xml  { head :ok }
       else
+        flash.now[:error] = 'Something went wrong.'
         format.html { render :action => "edit" }
         format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
       end
@@ -78,6 +80,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= file_name %>.destroy
 
     respond_to do |format|
+      flash[:notice] = '<%= class_name %> was successfully deleted.'
       format.html { redirect_to(<%= table_name %>_url) }
       format.xml  { head :ok }
     end

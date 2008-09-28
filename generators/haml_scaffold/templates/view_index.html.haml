@@ -2,19 +2,15 @@
 
 #<%= plural_name %>
   - for <%= singular_name %> in @<%= plural_name %> 
-    %ul
+    .<%= singular_name %>.section
 <% for attribute in attributes -%>
-      %li
-        = <%= singular_name %>.<%= attribute.name %>
+      .row= <%= singular_name %>.<%= attribute.name %>
 <% end -%>
-      %li
-        (
+      .row
         = link_to 'Show', <%= singular_name %>
         |
         = link_to 'Edit', edit_<%= singular_name %>_path(<%= singular_name %>)
         |
-        = link_to 'Destroy', <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
-        )
-      %li{ :style => "list-style-type:none;"} &nbsp;
+        = link_to 'Delete', <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
 
 %p= link_to 'New <%= singular_name %>', new_<%= singular_name %>_path

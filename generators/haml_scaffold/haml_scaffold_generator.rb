@@ -43,6 +43,7 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
       m.directory(File.join('test/functional', controller_class_path))
       m.directory(File.join('test/unit', class_path))
       m.directory(File.join('public/stylesheets', class_path))
+      m.directory(File.join('public/stylesheets/sass', class_path))
 
       for action in scaffold_views
         m.template(
@@ -53,7 +54,8 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
 
       # Layout and stylesheet.
       m.template('layout.html.haml', File.join('app/views/layouts', controller_class_path, "#{controller_file_name}.html.haml"))
-      m.template('style.css', 'public/stylesheets/scaffold.css')
+      m.file('styles.sass', 'public/stylesheets/sass/styles.sass')
+      m.template('style.sass', "public/stylesheets/sass/#{controller_file_name}.sass")
 
       m.template(
         'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")

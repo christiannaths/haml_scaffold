@@ -1,5 +1,6 @@
 Description:
     All views are now Haml
+    All stylesheets are now Sass
 
     Scaffolds an entire resource, from model and migration to controller and
     views, along with a full test suite. The resource is ready to use as a

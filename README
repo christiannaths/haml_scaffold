@@ -1,24 +1,45 @@
 HamlScaffold
 ============
-
-This plugin creates scaffolds with .html.haml views rather than the
-traditional .haml.erb views. Otherwise, all other aspects of the
-core rails scaffolding is intact.
+  This plugin creates scaffolds with .html.haml views rather than the
+  traditional .haml.erb views, and creates Sass stylesheets instead of
+  the traditional .css stylesheets.
+  
+  Otherwise, all other aspects of the
+  core rails scaffolding is intact.
 
 Requires
 =======
-Rails 2.1.0+
-Haml
+  Rails 2.1.0+
+  Haml
 
 Install
 =======
-install this as a plugin to your rails app with
-./script/plugin install git://github.com/cnaths/haml_scaffold.git
+  install this as a plugin to your rails app with
+  ./script/plugin install git://github.com/cnaths/haml_scaffold.git
+  
+  be sure to include the haml plugin in your rails app with:
+  ./haml --rails [path/to/app]
+  *see haml for more info
 
 Example
 =======
+  ./script/generate haml_scaffold Post title:string body:text
 
-./script/generate haml_scaffold Post title:string body:text
-
+Notes
+=======
+  Stylesheets are generated with Sass, so stylesheets/sass/mystyle.sass 
+  becomes stylesheets/mystyle.css
+  
+  It is useful to include the sass stylesheet in a 'master' sheet. For
+  this purpose there is a stylesheets/sass/styles.sass file included.
+  
+  Include your stylesheets with:
+    @import mystyle.sass
+    
+  Then
+    = stylesheet_link_tag "styles"
+  in your main layout
+  
+  *see Sass for more info
 
 Released under the MIT license
