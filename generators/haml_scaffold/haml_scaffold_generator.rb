@@ -1,5 +1,5 @@
 class HamlScaffoldGenerator < Rails::Generator::NamedBase
-  default_options :skip_timestamps => false, :skip_migration => false
+  default_options :skip_timestamps => false, :skip_migration => false, :skip_layout => false
 
   attr_reader   :controller_name,
                 :controller_class_path,
@@ -53,9 +53,11 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
       end
 
       # Layout and stylesheet.
-      m.template('layout.html.haml', File.join('app/views/layouts', controller_class_path, "#{controller_file_name}.html.haml"))
-      m.file('styles.sass', 'public/stylesheets/sass/styles.sass')
-      m.template('style.sass', "public/stylesheets/sass/#{controller_file_name}.sass")
+      unless options[:skip_layout]
+        m.template('layout.html.haml', File.join('app/views/layouts', controller_class_path, "#{controller_file_name}.html.haml"))
+        m.file('styles.sass', 'public/stylesheets/sass/styles.sass')
+        m.template('style.sass', "public/stylesheets/sass/#{controller_file_name}.sass")
+      end
 
       m.template(
         'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
@@ -83,6 +85,8 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
              "Don't add timestamps to the migration file for this model") { |v| options[:skip_timestamps] = v }
       opt.on("--skip-migration",
              "Don't generate a migration file for this model") { |v| options[:skip_migration] = v }
+      opt.on("--skip-layout",
+             "Don't generate the layout file for this controller") { |v| options[:skip_layout] = v }
     end
 
     def scaffold_views
