@@ -1,0 +1,4 @@
+- if flash[:notice]
+  %p.highlight= flash[:notice]
+- elsif flash[:error]
+  %p.error= flash[:error]
