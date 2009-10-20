@@ -2,12 +2,13 @@
 %html{ html_attrs }
   %head
     %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}
-    %title <%= app_name %> - A Ruby on Rails Application
+    %title <%= app_name.gsub(/"/, '') %> - A Ruby on Rails Application
     = render :partial => 'layouts/includes'
   %body
     .container
-      #masthead
-      #nav
-      #content
-        = render :partial => 'layouts/flashes'
+      #masthead.prepend-1.append-1
+        %h1 <%= app_name.gsub(/"/, '') %>
+      #nav.prepend-1.append-1
+      #flashes= render :partial => 'layouts/flashes'
+      #content.prepend-1.append-1
         = yield

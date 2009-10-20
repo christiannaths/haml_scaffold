@@ -36,10 +36,16 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
       m.directory(File.join('public/stylesheets', class_path))
       m.directory(File.join('public/stylesheets/sass', class_path)) unless options[:erb]
 
+      # views
       for action in scaffold_views
         m.template( "haml/#{action}.html.haml", File.join('app/views', controller_class_path, controller_file_name, "#{action}.html.haml")) unless options[:erb]
         m.template( "erb/#{action}.html.erb", File.join('app/views', controller_class_path, controller_file_name, "#{action}.html.erb")) if options[:erb]
       end
+      m.template( "haml/_form.html.haml", File.join('app/views', controller_class_path, controller_file_name, "_form.html.haml")) unless options[:erb]
+      m.template( "haml/_form.html.erb", File.join('app/views', controller_class_path, controller_file_name, "_form.html.erb")) if options[:erb]
+      
+      m.template( "haml/_record.html.haml", File.join('app/views', controller_class_path, controller_file_name, "_#{ controller_file_name.singularize }.html.haml")) unless options[:erb]
+      m.template( "erb/_record.html.erb", File.join('app/views', controller_class_path, controller_file_name, "_#{ controller_file_name.singularize }.html.erb")) if options[:erb]
 
       # Layout and stylesheet.
       if options[:layout]
@@ -57,7 +63,7 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
         m.directory(File.join('public/stylesheets/blueprint', class_path))
         m.file('css/blueprint/ie.css', 'public/stylesheets/blueprint/ie.css')
         m.file('css/blueprint/print.css', 'public/stylesheets/blueprint/print.css')
-        m.file('css/blueprint/screen.css', 'public/stylesheets/blueprint/screen.css')
+        m.file('css/blueprint/screen.css', 'public/stylesheets/blueprint/blueprint.css')
         
         #jquery-ui (4 default themes)
         for ui_theme in ui_themes do

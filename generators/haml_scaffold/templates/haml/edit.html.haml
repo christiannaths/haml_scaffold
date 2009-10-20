@@ -1,15 +1,8 @@
 %h1 Editing <%= singular_name %>
 
 - form_for @<%= singular_name %> do |f|
-
-<% for attribute in attributes -%>
-  .field
-    = f.label :<%= attribute.name %>
-    = f.<%= attribute.field_type %> :<%= attribute.name %>
-    = error_message_on "<%= singular_name %>", "<%= attribute.name %>", :prepend_text => "<%= attribute.name.humanize %> ", :append_text => "!", :css_class => "input_error"
-<% end -%>
-  .field
-    = f.submit "Update"
+  = render :partial => 'form', :locals => { :f => f }
+  .field= f.submit "Update"
 %p
   = link_to 'Show', @<%= singular_name %> 
   |

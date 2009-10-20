@@ -1,0 +1,5 @@
+<% for attribute in attributes -%>
+.<%= singular_name %>.column.span-22.last
+  %strong <%= attribute.column.human_name %>:
+  = <%= singular_name %>.<%= attribute.name %>
+<% end -%>

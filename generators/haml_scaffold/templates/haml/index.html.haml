@@ -1,16 +1,11 @@
-%h1 Listing <%= plural_name %>
+%h1 <%= plural_name.capitalize %>
 
 #<%= plural_name %>
   - for <%= singular_name %> in @<%= plural_name %> 
-    .<%= singular_name %>.section
-<% for attribute in attributes -%>
-      .row= <%= singular_name %>.<%= attribute.name %>
-<% end -%>
-      .row
-        = link_to 'Show', <%= singular_name %>
-        |
-        = link_to 'Edit', edit_<%= singular_name %>_path(<%= singular_name %>)
-        |
-        = link_to 'Delete', <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
+    = render :partial => <%= singular_name %>
+    %ul.column.span-22.last
+      %li= link_to 'Show', <%= singular_name %>
+      %li= link_to 'Edit', edit_<%= singular_name %>_path(<%= singular_name %>)
+      %li= link_to 'Delete', <%= singular_name %>, :confirm => 'Are you sure?', :method => :delete
 
-%p= link_to 'New <%= singular_name %>', new_<%= singular_name %>_path
+.column.span-22.last= link_to 'New <%= singular_name %>', new_<%= singular_name %>_path

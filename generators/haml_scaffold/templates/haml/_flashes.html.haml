@@ -1,4 +1,6 @@
 - if flash[:notice]
-  %p.highlight= flash[:notice]
+  .ui-state-highlight.ui-corner-all
+    %p.prepend-top.prepend-1.append-1= flash[:notice]
 - elsif flash[:error]
-  %p.error= flash[:error]
+  .ui-state-error.ui-corner-all
+    %p.prepend-top.prepend-1.append-1= flash[:error]

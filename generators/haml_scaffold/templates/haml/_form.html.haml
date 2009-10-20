@@ -1,0 +1,5 @@
+<% for attribute in attributes -%>
+.field.column.span-22.last
+  = f.label :<%= attribute.name %>
+  = f.<%= attribute.field_type %> :<%= attribute.name %>, :class => 'span-8'
+<% end -%>
