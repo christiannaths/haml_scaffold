@@ -1,0 +1,9 @@
+<%% if flash[:notice] %>
+  <div class="ui-state-highlight">
+    <p class="prepend-top prepend-1 append-1"><%%= flash[:notice] %></p>
+  </div>
+<%% elsif flash[:error] %>
+  <div class="ui-state-error ui-corner-all">
+    <p class="prepend-top prepend-1 append-1"><%%= flash[:error] %></p>
+  </div>
+<%% end %>

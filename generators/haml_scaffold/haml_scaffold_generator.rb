@@ -36,35 +36,28 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
       m.directory(File.join('public/stylesheets', class_path))
       m.directory(File.join('public/stylesheets/sass', class_path)) unless options[:erb]
 
-      # views
-      for action in scaffold_views
-        m.template( "haml/#{action}.html.haml", File.join('app/views', controller_class_path, controller_file_name, "#{action}.html.haml")) unless options[:erb]
-        m.template( "erb/#{action}.html.erb", File.join('app/views', controller_class_path, controller_file_name, "#{action}.html.erb")) if options[:erb]
-      end
-      m.template( "haml/_form.html.haml", File.join('app/views', controller_class_path, controller_file_name, "_form.html.haml")) unless options[:erb]
-      m.template( "haml/_form.html.erb", File.join('app/views', controller_class_path, controller_file_name, "_form.html.erb")) if options[:erb]
-      
-      m.template( "haml/_record.html.haml", File.join('app/views', controller_class_path, controller_file_name, "_#{ controller_file_name.singularize }.html.haml")) unless options[:erb]
-      m.template( "erb/_record.html.erb", File.join('app/views', controller_class_path, controller_file_name, "_#{ controller_file_name.singularize }.html.erb")) if options[:erb]
+      #views
+      scaffold_views.each { |action| m.template( "#{ extension.first }/#{ action }.html.#{ extension.first }", File.join('app/views', controller_class_path, controller_file_name, "#{ action }.html.#{ extension.first }")) }
+      m.template( "#{ extension.first }/_form.html.#{ extension.first }", File.join('app/views', controller_class_path, controller_file_name, "_form.html.#{ extension.first }"))
+      m.template( "#{ extension.first }/_record.html.#{ extension.first }", File.join('app/views', controller_class_path, controller_file_name, "_#{ controller_file_name.singularize }.html.#{ extension.first }"))
 
-      # Layout and stylesheet.
+
+
+      # Layouts, stylesheets, javascripts
       if options[:layout]
-        if options[:erb]
-          m.template('erb/layout.html.erb', File.join('app/views/layouts', controller_class_path, "application.html.erb"))
-          m.file('erb/application.css', 'public/stylesheets/application.css')
-        else
-          m.template('haml/layout.html.haml', File.join('app/views/layouts', controller_class_path, "application.html.haml"))
-          m.file('haml/application.sass', 'public/stylesheets/sass/application.sass')
-          m.file('haml/_includes.html.haml', 'app/views/layouts/_includes.html.haml')
-          m.file('haml/_flashes.html.haml', 'app/views/layouts/_flashes.html.haml')
-        end
+        # layout files
+        m.template("#{ extension.first }/layout.html.#{ extension.first }", File.join("app/views/layouts", controller_class_path, "application.html.#{ extension.first }"))
+        m.file("#{ extension.first }/_includes.html.#{ extension.first }", "app/views/layouts/_includes.html.#{ extension.first }")
+        m.file("#{ extension.first }/_flashes.html.#{ extension.first }", "app/views/layouts/_flashes.html.#{ extension.first }")
+        # sytle sheet
+        m.file("#{ extension.last }/application.#{ extension.last }", "public/stylesheets/sass/application.#{ extension.last }")
         
         # blueprint css
-        m.directory(File.join('public/stylesheets/blueprint', class_path))
-        m.file('css/blueprint/ie.css', 'public/stylesheets/blueprint/ie.css')
-        m.file('css/blueprint/print.css', 'public/stylesheets/blueprint/print.css')
-        m.file('css/blueprint/screen.css', 'public/stylesheets/blueprint/blueprint.css')
-        
+        m.directory(File.join("public/stylesheets/blueprint", class_path))
+        m.file("css/blueprint/ie.css", "public/stylesheets/blueprint/ie.css")
+        m.file("css/blueprint/print.css", "public/stylesheets/blueprint/print.css")
+        m.file("css/blueprint/screen.css", "public/stylesheets/blueprint/blueprint.css")
+          
         #jquery-ui (4 default themes)
         for ui_theme in ui_themes do
           images = Dir.glob(base_dir + templates_dir + "css/jquery-ui/#{ ui_theme }/images/*.png")
@@ -78,21 +71,21 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
         
         #javascript
         m.directory(File.join("public/javascripts/", class_path))
-        m.file('js/jquery-1.3.2.min.js', 'public/javascripts/jquery-1.3.2.min.js')
-        m.file('js/jquery-ui-1.7.2.custom.min.js', 'public/javascripts/jquery-ui-1.7.2.custom.min.js')
-        m.file('js/application.js', 'public/javascripts/application.js')
+        m.file("js/jquery-1.3.2.min.js", "public/javascripts/jquery-1.3.2.min.js")
+        m.file("js/jquery-ui-1.7.2.custom.min.js", "public/javascripts/jquery-ui-1.7.2.custom.min.js")
+        m.file("js/application.js", "public/javascripts/application.js")
       end
       
       # stylesheet for each resource
-      m.template('css/style.css', "public/stylesheets/#{controller_file_name}.css") if options[:erb]
-      m.template('css/style.css', "public/stylesheets/sass/#{controller_file_name}.sass") unless options[:erb]
-      m.add_stylesheet_link controller_file_name
+      m.template("css/resource.css", "public/stylesheets/#{ controller_file_name }.css") if options[:erb]
+      m.template("sass/resource.sass", "public/stylesheets/sass/#{ controller_file_name }.#{ extension.last }") unless options[:erb]
+      m.add_stylesheet_link controller_file_name, (base_dir + "app/views/layouts/_includes.html.#{ extension.first }")
       
 
       # controller, helper, and tests
-      m.template('controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb") )
-      m.template('functional_test.rb', File.join('test/functional', controller_class_path, "#{controller_file_name}_controller_test.rb"))
-      m.template('helper.rb',          File.join('app/helpers',     controller_class_path, "#{controller_file_name}_helper.rb"))
+      m.template("controller.rb", File.join("app/controllers", controller_class_path, "#{ controller_file_name }_controller.rb") )
+      m.template("functional_test.rb", File.join("test/functional", controller_class_path, "#{ controller_file_name }_controller_test.rb"))
+      m.template("helper.rb",          File.join("app/helpers",     controller_class_path, "#{ controller_file_name }_helper.rb"))
 
       # restful routes
       m.route_resources controller_file_name
@@ -104,7 +97,7 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
   protected
 
     def banner
-      "Usage: #{$0} haml_scaffold ModelName [field:type, field:type]"
+      "Usage: #{$0} #{ extension.first }_scaffold ModelName [field:type, field:type]"
     end
 
     def add_options!(opt)
@@ -136,12 +129,21 @@ class HamlScaffoldGenerator < Rails::Generator::NamedBase
       "vendor/plugins/haml_scaffold/generators/haml_scaffold/templates/"
     end
     
-    def add_stylesheet_link(link, path=(base_dir + "app/views/layouts/_includes.html.haml"), cache=[], last_occurrence=0)
+    def add_stylesheet_link(link, path, cache=[], last_occurrence=0)
       File.open(path, 'r') { |original| original.each { |line| cache << line } }
       for line in cache do
         last_occurrence = cache.index(line) if line.match(/stylesheet_link_tag/)
       end
-      cache.insert(last_occurrence + 1, "\n= stylesheet_link_tag '#{ link }'\n")
+      cache.insert(last_occurrence + 1, "\n= stylesheet_link_tag '#{ link }'\n") unless options[:erb]
+      cache.insert(last_occurrence + 1, "\n<%= stylesheet_link_tag '#{ link }' %>\n") if options[:erb]
       File.open(path, 'w') { |changed| changed.puts(cache) }
+    end
+    
+    def extension(opt = options[:erb], extension=[])
+      extension = case 
+        when opt then ["erb", "css"]
+        else ["haml", "sass"]
+      end
+      return extension
     end
 end

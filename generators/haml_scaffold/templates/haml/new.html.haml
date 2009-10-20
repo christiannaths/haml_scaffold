@@ -1,7 +1,6 @@
-%h1 New <%= singular_name %>
+%h2 New <%= singular_name.capitalize %>
 
-- form_for @<%= singular_name %> do |f|
-  = render :partial => 'form', :locals => { :f => f }
-  .field= f.submit "Create"
+= render 'form'
 
-%p= link_to 'Back', <%= plural_name %>_path
+%ul.column.span-22
+  %li= link_to 'Back', <%= plural_name %>_path

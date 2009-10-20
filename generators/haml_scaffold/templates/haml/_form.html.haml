@@ -1,5 +1,13 @@
+- form_for @<%= singular_name %> do |f|
+  
+
 <% for attribute in attributes -%>
-.field.column.span-22.last
-  = f.label :<%= attribute.name %>
-  = f.<%= attribute.field_type %> :<%= attribute.name %>, :class => 'span-8'
+  .field.column.span-22.last
+    = f.label :<%= attribute.name %>
+    = f.<%= attribute.field_type %> :<%= attribute.name %>, :class => 'span-8'
 <% end -%>
+  .field.column.span-22.last
+    - if @<%= singular_name %>.new_record?
+      = f.submit 'Create'
+    - else
+      = f.submit 'Update'

@@ -1,0 +1,6 @@
+<% for attribute in attributes -%>
+<div class="<%= singular_name %> column span-22 last">
+  <strong> <%= attribute.column.human_name %>: </strong>
+  <%%= <%= singular_name %>.<%= attribute.name %> %>
+</div>
+<% end -%>
