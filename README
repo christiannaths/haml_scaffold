@@ -1,4 +1,4 @@
-Major Revisions Underway
+This plugin has recently gone under major reconstruction. Please refer to this readme for updated options.
 
 HamlScaffold
 ============
@@ -6,12 +6,13 @@ HamlScaffold
   traditional .haml.erb views, and creates Sass stylesheets instead of
   the traditional .css stylesheets.
   
-  Otherwise, all other aspects of the
-  core rails scaffolding is intact.
+  Additional ui frameworks have been added: jQuery & jQuery-ui for javascript and BlueprintCSS for css.
+  
+  Also, form error messages are now displayed inline using the label tag.
 
 Requires
 =======
-  Rails 2.1.0+
+  Rails 2.2.0+
   Haml
 
 Install
@@ -26,22 +27,19 @@ Install
 Example
 =======
   ./script/generate haml_scaffold Post title:string body:text
+  
+Options
+=======
+  --layout //Generate layout components
+  --erb //Generate erb views/layouts and css stylesheets rather than haml/sass
+  --skip-timestamps //Don't add timestamps to the migration file for this model
+  --skip-migration //Don't generate a migration file for this model
 
 Notes
 =======
-  Stylesheets are generated with Sass, so stylesheets/sass/mystyle.sass 
-  becomes stylesheets/mystyle.css
+  "ActionView::Base.default_form_builder = InlineFormErrors" will be added to your environment.rb file during installation. This is to give error messages inside input labels. Delete this line to restore default form builder functionality.
   
-  It is useful to include the sass stylesheet in a 'master' sheet. For
-  this purpose there is a stylesheets/sass/styles.sass file included.
+  include tags will be written to the layouts/_includes partial during scaffolding
   
-  Include your stylesheets with:
-    @import mystyle.sass
-    
-  Then
-    = stylesheet_link_tag "styles"
-  in your main layout
-  
-  *see Sass for more info
 
 Released under the MIT license
